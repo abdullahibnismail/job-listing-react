@@ -1,37 +1,31 @@
-import React,{useState,useEffect} from 'react'
+import React,{useEffect} from 'react'
 import { cardData } from '../../constant/Constant'
 
 export default function Card({addData,stateData,setDeepFilter,deepfilter,setAgainFilter,againfilter}) {
-
-  const [jobs,setjobs]=useState([]) 
-  const [filterjobs,setfilterjobs]=useState([]) 
   
-
+  // Filtering Object which have specific tags added onClick in stateData
   useEffect(() => {
-    console.log("All Tags",stateData.filter(a=>a));
-    (stateData.filter((el)=>el)).map((m)=>{  
-      const val2 = (cardData.filter((f)=>f.tags.includes(m)))
-      setDeepFilter(val2)
-      console.log("FilterTags",val2);
-      setAgainFilter(deepfilter.filter((e)=>e.tags.includes(m)));
-      console.log('DeepFilter',deepfilter.filter((e)=>e.tags.includes(m)));
-    })
-    if(stateData.length===0){
-      setDeepFilter([])
-      setAgainFilter([])
-    }
-    // console.log(stateData.length - 1);
     
+    // code to get objects have tags in them
+    const  filterResult =   cardData.filter((v)=>{
+      let a=0
+      for (let x of stateData) {
+        if (v.tags.includes(x)) a++
+      }
+      if ((stateData.filter(e=>e)).length===a) return v;
+    })
+    setDeepFilter(filterResult);
   }, [stateData])
 
+  //Adding Clicked Tag to an Array Named stateData
   const onClickAddTag = (p)=>{
-    addData([...stateData,stateData.includes(p)?null:p])
+    addData([...stateData,stateData.includes(p)?null:p])    
   }
 
   return (
     <div className=''>
-      {(stateData.length===0?cardData:(againfilter.length===0?(deepfilter.filter((el)=>el)):(againfilter.filter((el)=>el)))).map((e,index)=>{
-      {/* {(cardData).map((e,index)=>{ */}
+      {/* Maping on Data in constant.js && Array of Objects having those tags which added onClick in stateData */}
+      {(stateData.length===0?cardData:(deepfilter)).map((e,index)=>{
           return(
             <div key={index}>
             <div id={e.id} className={`tagbar w-4/5 flex flex-col lg:flex-row  justify-between items-start lg:items-center bg-[#fff] rounded px-8 py-5 mx-auto my-16 ${e.addOns?'border-l-[5px] border-l-cardborder':null}`}>

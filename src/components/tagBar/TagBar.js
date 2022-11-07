@@ -3,11 +3,10 @@ import React from "react";
 export default function TagBar(props) {
   const funclear = (index) => {
     let data = props.stateData.filter((e, i) => i !== index);
-    let data2 = props.deepfilter.filter((e,i)=>i !== index);
-    let data3 = props.againfilter.filter((e,i)=>i !== index)
+    // let data2 = props.deepfilter.filter((e,i)=>i !== i);
+    // let data3 = props.againfilter.filter((e,i)=>i !== i)
     props.setpropsdata(data);
-    // props.setDeepFilter([])
-    // props.setAgainFilter([])
+    props.setDeepFilter([])
     
   };
   return (
